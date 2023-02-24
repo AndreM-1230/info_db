@@ -1,8 +1,7 @@
 <?php
 $_ENV['db_connection'] = [
-	'host' 		=> 'manufacture-bd',
+	'host' 		=> 'localhost',
 	'username' 	=> 'root',
 	'password' 	=> 'root',
-	'db'		=>	'manufacture_bd'
-]
-?>
+	'db'		=>	'info_db'
+];

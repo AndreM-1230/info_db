@@ -1,9 +1,11 @@
 <?php
 
-    function sql_connect() {
+    function sql_connect(): void
+    {
         global $db;
         try {
             $db = new PDO("mysql:host=".$_ENV['db_connection']['host'].";dbname=".$_ENV['db_connection']['db'], $_ENV['db_connection']['username'], $_ENV['db_connection']['password']);
+
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $db->exec("set names utf8");
         }
@@ -11,11 +13,13 @@
             echo $e->getMessage();
         }
     }
-    function sqltab ($sql) {
+    function sqltab ($sql): array
+    {
         global $db;
         $arr = array();
         try {
             $sth = $db->prepare($sql);
+            //print_r($sth);
             $sth->execute();
             $arr = $sth->fetchAll(PDO::FETCH_ASSOC);
         } catch (Exception $e){
@@ -23,7 +27,8 @@
         }
         return ($arr);
     }
-    function sqlupd ($sql) {
+    function sqlupd ($sql): int
+    {
         global $db;
         $insert_id = 0;
         try {
@@ -74,14 +79,14 @@
                 }
             }
 
-            public function length()
+            public function length(): string
             {
                 return (preg_replace('/[^0-9]/', '', $this->MysqlTypeNeedle) ?: '');
             }
 
             public function sqltype()
             {
-                foreach ($this->htmlInputTypes as $HtmlType => $types_array) {
+                foreach ($this->htmlInputTypes as $types_array) {
                     foreach ($types_array as $MysqlType) {
                         if( strpos($this->MysqlTypeNeedle, $MysqlType) !== false ){
                             return $MysqlType;
@@ -91,10 +96,10 @@
             }
         }
 
-        function getTableButtons($sql_tables, $active){
+        function getTableButtons($sql_tables, $active): string
+        {
             //ВЫБОР ТАБЛИЦЫ
-            $return = '';
-            $return .= "
+            $return = "
                 <div style='text-align: center; margin-bottom: 10px'>
                     <input id='time_text' placeholder='Disabled input' disabled readonly type='text' style='visibility: hidden'>
                 </div>
@@ -131,9 +136,9 @@
             return $return;
         }
 
-        function CreateTable(){
-            $return = '';
-            $return .="<h3>Имя таблицы: <input id='tablename' value=''/></h3>
+        function CreateTable(): string
+        {
+            return "<h3>Имя таблицы: <input id='tablename' value=''/></h3>
 
                 <table class='table table-striped' style='text-align:center;'><tbody>
                     <tr>
@@ -162,18 +167,12 @@
                         <input class='btn btn-lg btn-primary' type='button' value='Добавить'  />
                         </td>
                     </tr>
-                </tbody></table>
-
-            ";
-
-        return $return;
+                </tbody></table>";
         }
 
-        function getHeader($array_struct)
+        function getHeader($array_struct): string
         {
-            $return = '';
-            $return .=
-            "<tr>";
+            $return = "<tr>";
             foreach ($array_struct as $value) {
                 $return .= "<th style='text-align:center'>" . $value['Field'] . "</th>";
             }
@@ -183,10 +182,10 @@
             return $return;
         }
 
-        function getDependency($table, $Field)
+        function getDependency($table, $Field): array
         {
             $env = $_ENV['db_connection']['db'];
-            $dependence = sqltab("
+            return sqltab("
                 SELECT
                     REFERENCED_TABLE_NAME,
                     REFERENCED_COLUMN_NAME,
@@ -199,13 +198,11 @@
                     TABLE_NAME='$table' AND
                     COLUMN_NAME='$Field'
             ");
-            return $dependence;
         }
 
-        function addingToTable($array_struct, $active)
+        function addingToTable($array_struct, $active): string
         {
-            $return = '';
-            $return .= "
+            $return = "
                 <tr>
                     <td>
                         <form
@@ -282,10 +279,10 @@
             return $return;
         }
 
-        function arrSort ($array_struct){
+        function arrSort ($array_struct): string
+        {
             //СОРТИРОВКА
-            $return ='';
-            $return .="<tr><td><form
+            $return ="<tr><td><form
                             method='post'
                             action='./arrSort.php'
                             id='idsortform' ></form><select class='form-select' id='tablesort' onchange='tablesort()'>
@@ -300,7 +297,8 @@
             return $return;
         }
 
-        function getRows($row, $array_struct, $active, $form_id){
+        function getRows($row, $array_struct, $active, $form_id): string
+        {
             //echo $rov . PHP_EOL . $array_struct . PHP_EOL . $active . PHP_EOL;
             //print_r($array_struct);
             $return = '';
@@ -371,10 +369,9 @@
             return $return;
         }
 
-        function buttonChange($active, $row_id, $form_id)
+        function buttonChange($active, $row_id, $form_id): string
         {
-            $return = "";
-            $return .= "<td>
+            return "<td>
                     <form action='./edit.php' method='post' id='$form_id'></form>
                     <input form='$form_id' name='table' value='$active' hidden/>
                     <input name='id' form ='$form_id' value='$row_id' hidden/>
@@ -385,24 +382,21 @@
                         value='Редактировать'
                         onclick='buttoned(this)'/>
                 </td>";
-            return $return;
         }
 
-        function buttonDelete($row_id)
+        function buttonDelete($row_id): string
         {
-            $return = "";
-            $return .= "<td>
+            return "<td>
                     <form action='./delete.php' method='post'>
                         <input type='hidden' name='id' value='$row_id'>
                         <input style='width: 100% !important;' type='submit' class='btn btn-outline-danger' value='Удалить'>
                     </form>
                 </td></tr>";
-            return $return;
         }
 
-        function getSearchBar($array_struct, $active)
+        function getSearchBar($array_struct, $active): string
         {
-            $return .= "
+            $return = "
                 <tr>
                     ";
 
@@ -436,7 +430,7 @@
                         $return .=  "
                             <td>
                                 <select name='data[$value[Field]]' form='searchf' class='form-control'>
-                                    <option name='data[$value[Field]]' form='searchf' value='$val[id]'></option>";
+                                    <option name='data[$value[Field]]' form='searchf' value='$value[id]'></option>";
                         foreach ($secondary_table as $val) {
                             $return .= "<option name='data[$value[Field]]' form='searchf' value='$val[id]'>".  $val[title]  ."</option>";
                         }
@@ -472,10 +466,9 @@
 
         }
 
-        function getTable($sql_select, $array_struct, $active)
+        function getTable($sql_select, $array_struct, $active): string
         {
-            $return  = '';
-            $return  .= "<table class='table table-striped' data-tblname='$tbl' style='text-align:center;'><tbody>";
+            $return  = "<table class='table table-striped' data-tblname='tbl' style='text-align:center;'><tbody>";
             $return .= arrSort($array_struct);
             $return  .= getHeader($array_struct);
             $return  .= getSearchBar($array_struct, $active);
@@ -487,8 +480,8 @@
                 $form_id = 'form'.$i;
                 $return .= "<tr>";
                 $return .= getRows($row, $array_struct, $active, $form_id);
-                $return .= buttonChange($active, $row[id], $form_id);
-                $return .= buttonDelete($row[id]);
+                $return .= buttonChange($active, $row['id'], $form_id);
+                $return .= buttonDelete($row['id']);
                 $return .= "</tr>";
                 $maxrows++;
                 if($maxrows == $_SESSION['selsize']){
@@ -499,7 +492,7 @@
             return $return;
         }
 
-        function Pages($array_count, $selsize, $pages)
+        function Pages($array_count, $selsize, $pages): string
         {
             $return = '';
             $page_size = [30,60,90];
@@ -561,4 +554,3 @@
         ";
         return $return;
         }
-?>

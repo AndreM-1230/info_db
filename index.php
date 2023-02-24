@@ -2,12 +2,13 @@
 session_start();
 include('env.php');
 include('functions.php');
-define("_INC", 1);
+//define("_INC", 1);
 ini_set("memory_limit","6000M");
 ini_set('mysql.connect_timeout', 7200); // таймаут соединения с БД (сек.)
 ini_set('max_execution_time', 7200);    // таймаут php-скрипта
 ini_set('display_errors','ON');
-error_reporting('E_ALL');
+//error_reporting('E_ALL');
+
 if($_SESSION['pos_id'] == NULL){
     $_SESSION['pos_id'] = 'id';
 }
@@ -31,15 +32,15 @@ if($_SESSION['pos_id'] == NULL){
     <script src="./js/jquery.min.js"></script>
     <script type="text/javascript" src="script.js"></script>
     <script type="text/javascript">
-        $(function () {
+        /*$(function () {
             $('[data-toggle="tooltip"]').tooltip();
             $('[data-toggle="popover"]').popover();
-        });
+        });*/
 
         function tablesort() {
-    var arrsort=document.getElementById('tablesort').selectedIndex;
-    location.href = './arrSort.php?arrsort='+ arrsort;
-    console.log(arrsort);
+    let arr_sort=document.getElementById('tablesort').selectedIndex;
+    location.href = './arrSort.php?arr_sort='+ arr_sort;
+    console.log(arr_sort);
     }
     </script>
 </head>
@@ -48,16 +49,16 @@ if($_SESSION['pos_id'] == NULL){
     <!--    navbar-fixed-top-->
     <div class="container">
         <div class="navbar-header">
-            <a href="./index_sample.php?action=index">
+            <a href="">
                 <img id="pnglogo"
                      src="./images/db_logo.png"
-                     width="50"
-                     height="50"
+                     width="64"
+                     height="64"
                      alt="Информационная база данных производства"/></a>
         </div>
 
         <div class="navbar-header">
-            <a href="./index_sample.php?action=index" class="navbar-brand">Заказы предприятия</a>
+            <a href="" class="navbar-brand">Заказы предприятия</a>
         </div>
 
         <div class="navbar-collapse collapse" style="color: #badbcc !important;" id="navbar-main">
@@ -141,15 +142,16 @@ if($_SESSION['pos_id'] == NULL){
         </div>
     </div>
     <?php
-    if($_GET["action"] == ""){
+    /*if($_GET["action"] == ""){
         $_GET["action"] = "index";
     }
-    if($_GET["action"] = "index") {
+    if($_GET["action"] = "index") {*/
         include('editTable.php');
-    }
+    /*}*/
     ?>
 
     <div class="clearfix"></div>
+    <!--
     <div class="jumbotron" style="min-height: 300px; background-color: transparent;">
         &nbsp;
     </div>
@@ -157,6 +159,7 @@ if($_SESSION['pos_id'] == NULL){
         <div class="alert alert-dismissible alert-success col-lg-offset-1 col-lg-6">
         </div>
     </div>
+    -->
 </div>
 </body>
 </html>
