@@ -20,4 +20,3 @@
 	$_SESSION['array_struct']= $array;
 	$_SESSION['page']=1;
 	header("Location: index.php");
-?>

@@ -25,6 +25,10 @@
         } catch (Exception $e){
             var_dump($e);
         }
+        if($_SESSION['active_table'] == NULL){
+            $_SESSION['active_table'] = $arr[0][0];
+            echo $arr[0][0];
+        }
         return ($arr);
     }
     function sqlupd ($sql): int
@@ -238,17 +242,17 @@
 
                     if( $value['Key']=='MUL' ){
                         $dependence = getDependency($active, $value['Field']);
-                        $ST = $dependence[0][REFERENCED_TABLE_NAME];
+                        $ST = $dependence[0]['REFERENCED_TABLE_NAME'];
                         $secondary_table = sqltab("SELECT * FROM $ST ORDER BY id DESC");
                         $return .=  "
                             <td>
                                 <select name='data[$value[Field]]' form='idf' class='form-control'>";
                         foreach ($secondary_table as $val) {
-                            if($value == $val[id]){
-                                $return .= "<option name='data[$value[Field]]' form='idf' value='$val[id]' title='$val[title]' selected>".  $val[id]  ."</option>";
+                            if($value == $val['id']){
+                                $return .= "<option name='data[$value[Field]]' form='idf' value='$val[id]' title='$val[title]' selected>".  $val['id']  ."</option>";
                             }
                             else{
-                                $return .= "<option name='data[$value[Field]]' form='idf' value='$val[id]'>".  $val[title]  ."</option>";
+                                $return .= "<option name='data[$value[Field]]' form='idf' value='$val[id]'>".  $val['title']  ."</option>";
                             }
                         }
                         $return .=  "
@@ -288,7 +292,7 @@
                             id='idsortform' ></form><select class='form-select' id='tablesort' onchange='tablesort()'>
             <option>Сортировка</option>";
             foreach($array_struct as $value){
-                $return .="<option>" . $value['Field'] . "</option>";
+                $return .="<option> {$value['Field']} </option>";
 
                 //$return .= $value['Field'];
             }
@@ -334,18 +338,18 @@
                 }
                 if($flag==1){
                     $dependence = getDependency($active, $Field);//return $Field;
-                    $ST = $dependence[0][REFERENCED_TABLE_NAME];
+                    $ST = $dependence[0]['REFERENCED_TABLE_NAME'];
                     //$return .= $dependence[0][TABLE_NAME];
                     //selectpicker
                     $secondary_table = sqltab("SELECT * FROM $ST ORDER BY id DESC");
                     $return .= "<tr><td><select name='data[$Field]' form='$form_id' class='form-control' disabled>";
                     foreach ($secondary_table as $val) {
-                        if($value == $val[id]){
-                            $title=$val[title];
+                        if($value == $val['id']){
+                            $title=$val['title'];
                             $return .= "<option name='data[$Field]' form='$form_id' value='$val[id]' title='$val[title]' selected >".$title."</option>";
                         }
                         else{
-                            $return .= "<option name='data[$Field]' form='$form_id' value='$val[id]' >". $val[title] ."</option>";
+                            $return .= "<option name='data[$Field]' form='$form_id' value='$val[id]' >{$val['title']}</option>";
                         }
                     }
 
@@ -425,14 +429,14 @@
 
                     if( $value['Key']=='MUL' ){
                         $dependence = getDependency($active, $value['Field']);
-                        $ST = $dependence[0][REFERENCED_TABLE_NAME];
+                        $ST = $dependence[0]['REFERENCED_TABLE_NAME'];
                         $secondary_table = sqltab("SELECT * FROM $ST ORDER BY id DESC");
                         $return .=  "
                             <td>
                                 <select name='data[$value[Field]]' form='searchf' class='form-control'>
                                     <option name='data[$value[Field]]' form='searchf' value='$value[id]'></option>";
                         foreach ($secondary_table as $val) {
-                            $return .= "<option name='data[$value[Field]]' form='searchf' value='$val[id]'>".  $val[title]  ."</option>";
+                            $return .= "<option name='data[$value[Field]]' form='searchf' value='$val[id]'>{$val['title']}</option>";
                         }
                         $return .=  "
                                 </select>
