@@ -18,4 +18,3 @@
 			break;
 	}
 	header("Location: index.php");
-?>

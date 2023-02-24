@@ -9,14 +9,8 @@
  		$str[]=$key."='".$value."'";
  	}
  	$sql="UPDATE $_POST[table] SET ". implode(', ', $str) ." WHERE id=$_POST[id]";
-	if($db -> query($sql))
-	{
-		header("Location: index.php");
-	}
-	else
-	{
-		echo "Ошибка" . $db->error;
-	}
+
+     header("Location: index.php");
 
 	
 ?>

@@ -1,4 +1,5 @@
 <?php
+    session_start();
 	global $db;
 	include('env.php');
 	$db = new PDO("mysql:host=".$_ENV['db_connection']['host'].";dbname=".$_ENV['db_connection']['db'], $_ENV['db_connection']['username'], $_ENV['db_connection']['password']);
@@ -11,11 +12,4 @@
  	};
 	$values = implode(",", array_map( $addSlashes, $_POST['data']) );
 	$sql = "INSERT INTO $_POST[table] ($keys) VALUES ($values)";
-	if($db -> query($sql))
-	{
-		header("Location: index.php");
-	}
-	else
-	{
-		echo "Ошибка" . $db->error;
-	}
+    header("Location: index.php");

@@ -19,5 +19,3 @@ if($db -> query($sql))
     {
         echo "Ошибка" . $db->error;
     }
-
-?>

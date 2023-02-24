@@ -19,14 +19,7 @@ $_SESSION["newsession"]='';
 		{
 			echo "Ошибка";
 		}
-		if($db -> query($sql))
-		{
-			header("Location: index.php");
-		}
-		else
-		{
-			echo "Ошибка" . $db->error;
-		}
+        header("Location: index.php");
 	}
 	
 ?>

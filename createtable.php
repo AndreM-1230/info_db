@@ -2,7 +2,7 @@
 session_start();
 include('env.php');
 include('functions.php');
-define("_INC", 1);
+//define("_INC", 1);
 ini_set("memory_limit","6000M");
 ini_set('mysql.connect_timeout', 7200); // таймаут соединения с БД (сек.)
 ini_set('max_execution_time', 7200);    // таймаут php-скрипта
@@ -28,10 +28,6 @@ error_reporting('E_ALL');
     <script src="./js/jquery.min.js"></script>
     <script type="text/javascript" src="script.js"></script>
     <script type="text/javascript">
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-            $('[data-toggle="popover"]').popover();
-        });
     </script>
 </head>
 <body>
@@ -39,16 +35,16 @@ error_reporting('E_ALL');
     <!--    navbar-fixed-top-->
     <div class="container">
         <div class="navbar-header">
-            <a href="./index_sample.php?action=index">
+            <a href="">
                 <img id="pnglogo"
                      src="./images/db_logo.png"
-                     width="50"
-                     height="50"
+                     width="64"
+                     height="64"
                      alt="Информационная база данных производства"/></a>
         </div>
 
         <div class="navbar-header">
-            <a href="./index_sample.php?action=index" class="navbar-brand">Заказы предприятия</a>
+            <a href="" class="navbar-brand">Заказы предприятия</a>
         </div>
 
         <div class="navbar-collapse collapse" style="color: #badbcc !important;" id="navbar-main">
