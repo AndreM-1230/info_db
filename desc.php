@@ -1,17 +1,5 @@
 <?php
 session_start();
-include('env.php');
-include('functions.php');
-//define("_INC", 1);
-ini_set("memory_limit","6000M");
-ini_set('mysql.connect_timeout', 7200); // таймаут соединения с БД (сек.)
-ini_set('max_execution_time', 7200);    // таймаут php-скрипта
-ini_set('display_errors','ON');
-//error_reporting('E_ALL');
-
-if($_SESSION['pos_id'] == NULL){
-    $_SESSION['pos_id'] = 'id';
-}
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -57,7 +45,7 @@ if($_SESSION['pos_id'] == NULL){
 
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#" class="navbar-brand text-light">Личный кабинет</a></li>
-                <li><a href="desc.php" class="navbar-brand text-light">Справка</a></li>
+                <li><a href="desc.php" class="navbar-brand text-light disabled" >Справка</a></li>
             </ul>
         </div>
     </div>
@@ -66,12 +54,12 @@ if($_SESSION['pos_id'] == NULL){
     <div class="page-header" id="banner">
         <div class="row">
             <div class="col-lg-12">
-                <h1>Информационная база данных производства</h1>
+                <h1>Справка</h1>
             </div>
         </div>
     </div>
     <?php
-        include('editTable.php');
+
     ?>
 
     <div class="clearfix"></div>

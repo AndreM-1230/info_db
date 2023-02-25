@@ -145,30 +145,21 @@
             return "<h3>Имя таблицы: <input id='tablename' value=''/></h3>
 
                 <table class='table table-striped' style='text-align:center;'><tbody>
-                    <tr>
+                    <form
+                        method='post'
+                        action='./Cratetableserv.php'
+                        id='idf'></form>
+                    <h3>Поля таблицы:</h3>
+                    <tr id='0'>
                         <td>
-                            <h3>Поля таблицы:</h3>
+                            <h3>id</h3>
                         </td>
                         <td>
-                            <input id='id' value='id' disabled />
-                            <br>
-                            <input id='id' value=''   disabled />
-                        </td>
-                        <td>
-                            <form
-                            method='post'
-                            action='./Cratetableserv.php'
-                            id='idf'></form>
-                            <input id='id' value='Название' />
-                            <br>
-                            <select name='' form='' class='form-control' class='form-control'>
-                            <option name='' form='' value='Целые числа' >Целые числа</option>
-                            <option name='' form='' value='Дробные числа' title='Дробные числа' >Дробные числа</option>
-                            <option name='' form='' value='Строки' title='Строки' >Строки</option>
-                            </select>
-                        </td>
-                        <td colspan=2>
-                        <input class='btn btn-lg btn-primary' type='button' value='Добавить'  />
+                        <div class='btn-group' role='group' aria-label='Basic example'>
+                            <button type='button' id='0' class='btn btn-outline-success' disabled>Вверх</button>
+                            <button type='button' id='1' class='btn btn-outline-success' disabled>Вниз</button>
+                            <button type='button' id='2' class='btn btn-outline-success' onclick='create_string(this)'>Добавить</button>
+                        </div>
                         </td>
                     </tr>
                 </tbody></table>";
