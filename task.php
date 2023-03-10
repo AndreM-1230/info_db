@@ -88,10 +88,13 @@ if($_SESSION['pos_id'] == NULL)
         </div>
     </div>
     <?php
-        include('editTable.php');
+    if($_SESSION['account'] != null){
+        echo complaint_list();
+    }
     ?>
 
     <div class="clearfix"></div>
 </div>
 </body>
 </html>
+

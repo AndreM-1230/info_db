@@ -1,11 +1,11 @@
 <?php
 session_start();
-	global $db;
+	global $db_info;
 include('env.php');
 include ('functions.php');
-$db = new PDO("mysql:host=".$_ENV['db_connection']['host'].";dbname=".$_ENV['db_connection']['db'], $_ENV['db_connection']['username'], $_ENV['db_connection']['password']);
-$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-$db->exec("set names utf8");
+$db_info = new PDO("mysql:host=".$_ENV['db_connection']['host'].";dbname=".$_ENV['db_connection']['db'], $_ENV['db_connection']['username'], $_ENV['db_connection']['password']);
+$db_info->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$db_info->exec("set names utf8");
 
 
 var_dump($_POST);
@@ -42,11 +42,11 @@ print_r($table_struct);
 $sql = "CREATE TABLE $table_name ( $table_struct )";
 //$db->exec($sql);
 
-if($db -> query($sql))
+if($db_info -> query($sql))
 {
     header("Location: index.php");
 }
 	else
     {
-        echo "Ошибка" . $db->error;
+        echo "Ошибка" . $db_info->error;
     }
