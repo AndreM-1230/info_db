@@ -1,0 +1,14 @@
+{
+  "name": "vendor_name/info_db",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Andre",
+      "email": "jungerbard@gmail.com"
+    }
+  ],
+  "require": {
+  }
+}
