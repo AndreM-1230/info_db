@@ -18,7 +18,7 @@
             $db_acc->exec("set names utf8");
         }
         catch(PDOException $e) {
-            echo $e->getMessage();
+            //echo $e->getMessage();
         }
     }
 
@@ -38,7 +38,7 @@ function sql_length($sql) :int
             $sth->execute();
             $arr = $sth->fetchAll(PDO::FETCH_ASSOC);
         } catch (Exception $e){
-            var_dump($e);
+            //var_dump($e);
         }
         return ($arr);
     }
@@ -55,9 +55,10 @@ function sql_length($sql) :int
         } catch (Exception $e){
             var_dump($e);
         }
-        if($_SESSION['active_table'] == NULL){
-            $_SESSION['active_table'] = $arr[0][0];
-            echo $arr[0][0];
+        if($_SESSION['active_table'] == null){
+            //var_dump($arr);
+            $_SESSION['active_table'] = $arr[0];
+            //echo $arr[0][0];
         }
         return ($arr);
     }
@@ -70,7 +71,7 @@ function sql_length($sql) :int
             $sth->execute();
             $insert_id = $db_info->lastInsertId();
         } catch(Exception $e) {
-            ExceptionCatcher($e);
+            //ExceptionCatcher($e);
         }
         return $insert_id;
     }
@@ -165,15 +166,13 @@ function complaint_list():string
     $return .="<td class='col-lg-3'>Ответ:</td></tr>";
     foreach($complaints_arr as $value){
         $user = sqlacc("SELECT login FROM users WHERE id = $value[user]");
-        if(!isset($value['admin'])){
-            $fixer = sqlacc("SELECT login FROM users WHERE id = $value[admin]");
-        }
+        $fixer = sqlacc("SELECT login FROM users WHERE id = $value[admin]");
         $status = sqlacc("SELECT status_name FROM status WHERE id = $value[status]");
 
         $return .="<tr>
                 <td>". $value['id'] ."</td>";
         $return .="<td style='max-width: 45ch !important;'>";
-        if(strlen($value['complaint_text']) > 30){
+        if(strlen($value['task_text']) > 30){
             $accordionID = 'acc' . $value['id'] . 'id';
             $data_accordionID = '#' . $accordionID;
 
@@ -182,7 +181,7 @@ function complaint_list():string
 
             $heading_accordion = 'head' . $value['id'] . 'heading';
 
-            $data_length =mb_substr($value['complaint_text'], 0, 30);
+            $data_length =mb_substr($value['task_text'], 0, 30);
 
             $return .= accordion($accordionID,
                 $data_accordionID,
@@ -190,10 +189,10 @@ function complaint_list():string
                 $data_collapse,
                 $heading_accordion,
                 $data_length,
-                $value['complaint_text']);
+                $value['task_text']);
         }
         else{
-            $return .=$value['complaint_text'];
+            $return .=$value['task_text'];
         }
         $return .="</td>";
 
@@ -540,10 +539,10 @@ class MySqlTypeToHtmlType
                                 <select name='data[$value[Field]]' form='idf' class='form-control'>";
                         foreach ($secondary_table as $val) {
                             if($value == $val['id']){
-                                $return .= "<option name='data[$value[Field]]' form='idf' value='$val[id]' title='$val[title]' selected>".  $val['id']  ."</option>";
+                                $return .= "<option name='data[$value[Field]]' value='$val[id]' title='$val[title]' selected>".  $val['id']  ."</option>";
                             }
                             else{
-                                $return .= "<option name='data[$value[Field]]' form='idf' value='$val[id]'>".  $val['title']  ."</option>";
+                                $return .= "<option name='data[$value[Field]]' value='$val[id]'>".  $val['title']  ."</option>";
                             }
                         }
                         $return .=  "
@@ -637,10 +636,10 @@ class MySqlTypeToHtmlType
                     foreach ($secondary_table as $val) {
                         if($value == $val['id']){
                             $title=$val['title'];
-                            $return .= "<option name='data[$Field]' form='$form_id' value='$val[id]' title='$val[title]' selected >".$title."</option>";
+                            $return .= "<option name='data[$Field]'  value='$val[id]' title='$val[title]' selected >".$title."</option>";
                         }
                         else{
-                            $return .= "<option name='data[$Field]' form='$form_id' value='$val[id]' >{$val['title']}</option>";
+                            $return .= "<option name='data[$Field]'  value='$val[id]' >{$val['title']}</option>";
                         }
                     }
 
@@ -725,9 +724,9 @@ class MySqlTypeToHtmlType
                         $return .=  "
                             <td>
                                 <select name='data[$value[Field]]' form='searchf' class='form-control'>
-                                    <option name='data[$value[Field]]' form='searchf' value='$value[id]'></option>";
+                                    <option name='data[$value[Field]]' value='$value[id]'></option>";
                         foreach ($secondary_table as $val) {
-                            $return .= "<option name='data[$value[Field]]' form='searchf' value='$val[id]'>{$val['title']}</option>";
+                            $return .= "<option name='data[$value[Field]]' value='$val[id]'>{$val['title']}</option>";
                         }
                         $return .=  "
                                 </select>

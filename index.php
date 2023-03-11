@@ -12,6 +12,8 @@ ini_set('display_errors','ON');
 //error_reporting('E_ALL');
 if(!isset($_SESSION['account']))
     $_SESSION['account'] = null;
+if(!isset($_SESSION['active_table']))
+    $_SESSION['active_table'] = null;
 if($_SESSION['pos_id'] == NULL)
     $_SESSION['pos_id'] = 'id';
 
@@ -88,6 +90,7 @@ if($_SESSION['pos_id'] == NULL)
         </div>
     </div>
     <?php
+    if($_SESSION['account'] != null)
         include('editTable.php');
     ?>
 
